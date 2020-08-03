@@ -1,0 +1,6 @@
+name: SootCTF
+version: 0.0.1
+author: Spanner
+api-version: 1.16
+main: com.spanner.SootCTF.Main
+description: A plugin for Capture-The-Flag matches
