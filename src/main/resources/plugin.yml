@@ -4,3 +4,16 @@ author: Spanner
 api-version: 1.16
 main: com.spanner.SootCTF.Main
 description: A plugin for Capture-The-Flag matches
+
+commands:
+ sootctf:
+  usage: "/sootctf"
+  aliases: [sctf]
+
+permissions:
+ sootctf.edit.arena:
+  default: op
+ sootctf.edit.spawn:
+  default: op
+ sootctf.edit.team:
+  default: op
