@@ -11,14 +11,15 @@ public class Main extends JavaPlugin {
 	
 	Logger logger;
 	
-	public HashMap<String,CTFTeam> teams;
-	public HashMap<String,CTFSpawn> spawns;
-	public HashMap<String,CTFArena> arenas;
+	public HashMap<String,CTFTeam> teams = new HashMap<String,CTFTeam>();
+	public HashMap<String,CTFSpawn> spawns = new HashMap<String,CTFSpawn>();;
+	public HashMap<String,CTFArena> arenas = new HashMap<String,CTFArena>();;
 	
 	@Override
 	public void onEnable() {
 		logger = getServer().getLogger();
 		logger.info("SootCTF enabled");
+		getCommand("sootctf").setExecutor(new Executor());
 	}
 	
 }

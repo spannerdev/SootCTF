@@ -9,6 +9,8 @@ public class CTFTeam {
 
 	public String name;
 	
+	// todo: 1.16 rgb colour support
+	
 	public ChatColor color; // TODO: fix spelling :)
 	public Material block;
 	
