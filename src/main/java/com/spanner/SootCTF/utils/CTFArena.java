@@ -1,13 +1,13 @@
 package com.spanner.SootCTF.utils;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class CTFArena {
 
 	public String name;
 	
-	public List<CTFSpawn> spawns;
-	public List<CTFTeam> teams;
+	public HashMap<String,CTFSpawn> spawns = new HashMap<String,CTFSpawn>();
+	public HashMap<String,CTFTeam> teams = new HashMap<String,CTFTeam>();
 	
 	
 	public CTFArena(String name) {

@@ -14,7 +14,7 @@ public class CTFTeam {
 	public ChatColor color; // TODO: fix spelling :)
 	public Material block;
 	
-	public Set<CTFPlayer> players;
+	public Set<CTFPlayer> players; // not sure if i need this, we'll see how it plays out
 	
 	public CTFTeam(String name) {
 		this.name = name;

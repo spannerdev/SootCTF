@@ -71,32 +71,32 @@ public class Executor implements CommandExecutor {
 						if (args[4].equalsIgnoreCase("add")) {
 							CTFSpawn spawn = p.spawns.get(args[5]);
 							if (spawn == null) return true; // todo: show "not found"
-							arena.spawns.add(spawn);
+							arena.spawns.put(args[5],spawn);
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
 						if (args[4].equalsIgnoreCase("remove")) {
 							CTFSpawn spawn = p.spawns.get(args[5]);
 							if (spawn == null) return true; // todo: show "not found"
-							if (!arena.spawns.contains(spawn)) return true; // todo: show "spawn not in arena"
-							arena.spawns.remove(spawn);
+							if (!arena.spawns.containsValue(spawn)) return true; // todo: show "spawn not in arena"
+							arena.spawns.remove(args[5]);
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
 						return false;
 					}
 					if (args[3].equalsIgnoreCase("teams")) {
-							if (args.length < 5) return true; // todo: show help
+						if (args.length < 5) return true; // todo: show help
 						
 						if (args[4].equalsIgnoreCase("add")) {
 							CTFTeam team = p.teams.get(args[5]);
+							p.getServer().broadcastMessage(""+team);
 							if (team == null) return true; // todo: show "not found"
-							arena.teams.add(team);
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
 						if (args[4].equalsIgnoreCase("remove")) {
 							CTFTeam team = p.teams.get(args[5]);
 							if (team == null) return true; // todo: show "not found"
-							if (!arena.teams.contains(team)) return true; // todo: show "team not in arena"
-							arena.teams.remove(team);
+							if (!arena.teams.containsValue(team)) return true; // todo: show "team not in arena"
+							arena.teams.remove(args[5]);
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
 						return false;
