@@ -13,39 +13,66 @@ public class Executor implements CommandExecutor {
 	
 	private Main p = Main.getPlugin(Main.class);
 
+	private String NO_PERMISSION = ChatColor.RED + "You don't have permission to use this command";
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		// todo: de-yanderedev if statements
 		// todo: all the todos
 		
 		if (command.getName().equals("sootctf")) {
-			if (args.length == 0) return true; // todo: show help
+			if (args.length == 0) {
+				sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf <create|edit|help>");
+				return true;
+			}
+			
 			
 			if (args[0].equalsIgnoreCase("create")) {
-				if (args.length < 2) return true; // todo: show help
+				if (args.length < 2) {
+					sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf create <arena|spawn|team> <name>");
+					return true;
+				}
 				
 				if (args[1].equalsIgnoreCase("arena")) {
-					if (args.length != 3) return true; // todo: show help
+					if (args.length != 3) {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf create arena <name>");
+						return true;
+					}
 					
-					if (!sender.hasPermission("sootctf.edit.arena")) return true; // todo: show "no permission"
+					if (!sender.hasPermission("sootctf.edit.arena")) {
+						sender.sendMessage(NO_PERMISSION);
+						return true;
+					}
 					
 					p.arenas.put(args[2],new CTFArena(args[2]));
 					sender.sendMessage("success"); return true; // todo: improve message
 				}
 				
 				if (args[1].equalsIgnoreCase("spawn")) {
-					if (args.length != 3) return true; // todo: show help
+					if (args.length != 3) {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf create spawn <name>");
+						return true;
+					}
 					
-					if (!sender.hasPermission("sootctf.edit.spawn")) return true; // todo: show "no permission"
+					if (!sender.hasPermission("sootctf.edit.spawn")) {
+						sender.sendMessage(NO_PERMISSION);
+						return true;
+					}
 					
 					p.spawns.put(args[2], new CTFSpawn(args[2]));
 					sender.sendMessage("success"); return true; // todo: improve message
 				}
 				
 				if (args[1].equalsIgnoreCase("team")) {
-					if (args.length != 3) return true; // todo: show help
+					if (args.length != 3) {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf create team <name>");
+						return true;
+					}
 					
-					if (!sender.hasPermission("sootctf.edit.team")) return true; // todo: show "no permission"
+					if (!sender.hasPermission("sootctf.edit.team")) {
+						sender.sendMessage(NO_PERMISSION);
+						return true;
+					}
 					
 					p.teams.put(args[2],new CTFTeam(args[2]));
 					sender.sendMessage("success"); return true; // todo: improve message
@@ -55,18 +82,30 @@ public class Executor implements CommandExecutor {
 			
 			
 			if (args[0].equalsIgnoreCase("edit")) {
-				if (args.length < 2) return true; // todo: show help
+				if (args.length < 2) {
+					sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf edit <arena|spawn|team> <name>");
+					return true;
+				}
 				
 				if (args[1].equalsIgnoreCase("arena")) {
-					if (args.length < 3) return true; // todo: show help
+					if (args.length < 3) {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf edit arena <name> <spawns|teams>");
+						return true;
+					}
 					
-					if (!sender.hasPermission("sootctf.edit.arena")) return true; // todo: show "no permission"
+					if (!sender.hasPermission("sootctf.edit.arena")) {
+						sender.sendMessage(NO_PERMISSION);
+						return true;
+					}
 					
 					CTFArena arena = p.arenas.get(args[2]);
 					if (arena == null) return true; // todo: show "not found"
 					
 					if (args[3].equalsIgnoreCase("spawns")) {
-						if (args.length < 5) return true; // todo: show help
+						if (args.length < 5) {
+							sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf edit arena <name> spawns <add|remove> <spawn name>");
+							return true;
+						}
 						
 						if (args[4].equalsIgnoreCase("add")) {
 							CTFSpawn spawn = p.spawns.get(args[5]);
@@ -84,7 +123,10 @@ public class Executor implements CommandExecutor {
 						return false;
 					}
 					if (args[3].equalsIgnoreCase("teams")) {
-						if (args.length < 5) return true; // todo: show help
+						if (args.length < 5) {
+							sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf edit arena <name> teams <add|remove>");
+							return true;
+						}
 						
 						if (args[4].equalsIgnoreCase("add")) {
 							CTFTeam team = p.teams.get(args[5]);
@@ -105,15 +147,24 @@ public class Executor implements CommandExecutor {
 				}
 				
 				if (args[1].equalsIgnoreCase("spawn")) {
-					if (args.length < 3) return true; // todo: show help
+					if (args.length < 3) {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf edit spawn <name> <team|radius|position>");
+						return true;
+					}
 					
-					if (!sender.hasPermission("sootctf.edit.spawn")) return true; // todo: show "no permission"
+					if (!sender.hasPermission("sootctf.edit.spawn")) {
+						sender.sendMessage(NO_PERMISSION);
+						return true;
+					}
 					
 					CTFSpawn spawn = p.spawns.get(args[2]);
 					if (spawn == null) return true; // todo: show "not found"
 					
 					if (args[3].equalsIgnoreCase("team")) {
-						if (args.length < 5) return true; // todo: show help or current value
+						if (args.length < 5) {
+							sender.sendMessage(ChatColor.GREEN + "Team: "+spawn.team.color+spawn.team.name);
+							return true;
+						}
 						
 						if (args[4].equalsIgnoreCase("set")) {
 							CTFTeam team = p.teams.get(args[5]);
@@ -124,7 +175,10 @@ public class Executor implements CommandExecutor {
 						return false;
 					}
 					if (args[3].equalsIgnoreCase("radius")) {
-							if (args.length < 5) return true; // todo: show help or current value
+							if (args.length < 5) {
+								sender.sendMessage(ChatColor.GREEN + "Radius: "+spawn.spawnRadius);
+								return true;
+							}
 						
 						if (args[4].equalsIgnoreCase("set")) {
 							try {
@@ -139,7 +193,10 @@ public class Executor implements CommandExecutor {
 					}
 					
 					if (args[3].equalsIgnoreCase("pos") || args[3].equalsIgnoreCase("position")) {
-						if (args.length < 5) return true; // todo: show help or current value
+						if (args.length < 5) {
+							sender.sendMessage(ChatColor.GREEN + "Position: "+spawn.position.getBlockX()+" "+spawn.position.getBlockY()+" "+spawn.position.getBlockZ());
+							return true;
+						}
 						
 						if (args[4].equalsIgnoreCase("set")) {
 							if (!(sender instanceof Entity)) return true; //todo: show error
@@ -153,15 +210,24 @@ public class Executor implements CommandExecutor {
 				}
 				
 				if (args[1].equalsIgnoreCase("team")) {
-					if (args.length < 3) return true; // todo: show help
+					if (args.length < 3) {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /sootctf edit team <name> <color|block>");
+						return true;
+					}
 					
-					if (!sender.hasPermission("sootctf.edit.team")) return true; // todo: show "no permission"
+					if (!sender.hasPermission("sootctf.edit.team")) {
+						sender.sendMessage(NO_PERMISSION);
+						return true;
+					}
 					
 					CTFTeam team = p.teams.get(args[2]);
 					if (team == null) return true; // todo: show "not found"
 					
 					if (args[3].equalsIgnoreCase("color") || args[3].equalsIgnoreCase("colour")) {
-						if (args.length < 5) return true; // todo: show help or current value
+						if (args.length < 5) {
+							sender.sendMessage(ChatColor.GREEN + "Color: "+team.color+team.color.toString());
+							return true;
+						}
 						
 						if (args[4].equalsIgnoreCase("set")) {
 							try {
@@ -176,7 +242,10 @@ public class Executor implements CommandExecutor {
 						return false;
 					}
 					if (args[3].equalsIgnoreCase("block")) {
-						if (args.length < 5) return true; // todo: show help or current value
+						if (args.length < 5) {
+							sender.sendMessage(ChatColor.GREEN + "Block: "+team.block.toString());
+							return true;
+						}
 						
 						if (args[4].equalsIgnoreCase("set")) {
 							try {
@@ -193,6 +262,11 @@ public class Executor implements CommandExecutor {
 					return false;
 				}
 				return false;
+			}
+			
+			if (args[0].equalsIgnoreCase("help")) {
+				sender.sendMessage("Help command not yet implemented. Just read the source code 4head.\nhttps://github.com/spannerdev/SootCTF");
+				return true;
 			}
 			return false;
 			
