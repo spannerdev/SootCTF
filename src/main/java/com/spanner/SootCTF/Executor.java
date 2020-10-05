@@ -14,6 +14,7 @@ public class Executor implements CommandExecutor {
 	private Main p = Main.getPlugin(Main.class);
 
 	private String NO_PERMISSION = ChatColor.RED + "You don't have permission to use this command";
+	private String NOT_FOUND = ChatColor.RED + "Not found. Are you sure you typed the name correctly? It's case sensitive!";
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -99,7 +100,10 @@ public class Executor implements CommandExecutor {
 					}
 					
 					CTFArena arena = p.arenas.get(args[2]);
-					if (arena == null) return true; // todo: show "not found"
+					if (arena == null) {
+						sender.sendMessage(NOT_FOUND);
+						return true;
+					}
 					
 					if (args[3].equalsIgnoreCase("spawns")) {
 						if (args.length < 5) {
@@ -109,13 +113,19 @@ public class Executor implements CommandExecutor {
 						
 						if (args[4].equalsIgnoreCase("add")) {
 							CTFSpawn spawn = p.spawns.get(args[5]);
-							if (spawn == null) return true; // todo: show "not found"
+							if (spawn == null) {
+								sender.sendMessage(NOT_FOUND);
+								return true;
+							}
 							arena.spawns.put(args[5],spawn);
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
 						if (args[4].equalsIgnoreCase("remove")) {
 							CTFSpawn spawn = p.spawns.get(args[5]);
-							if (spawn == null) return true; // todo: show "not found"
+							if (spawn == null) {
+								sender.sendMessage(NOT_FOUND);
+								return true;
+							}
 							if (!arena.spawns.containsValue(spawn)) return true; // todo: show "spawn not in arena"
 							arena.spawns.remove(args[5]);
 							sender.sendMessage("success"); return true; // todo: improve message
@@ -131,12 +141,18 @@ public class Executor implements CommandExecutor {
 						if (args[4].equalsIgnoreCase("add")) {
 							CTFTeam team = p.teams.get(args[5]);
 							p.getServer().broadcastMessage(""+team);
-							if (team == null) return true; // todo: show "not found"
+							if (team == null) {
+								sender.sendMessage(NOT_FOUND);
+								return true;
+							}
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
 						if (args[4].equalsIgnoreCase("remove")) {
 							CTFTeam team = p.teams.get(args[5]);
-							if (team == null) return true; // todo: show "not found"
+							if (team == null) {
+								sender.sendMessage(NOT_FOUND);
+								return true;
+							}
 							if (!arena.teams.containsValue(team)) return true; // todo: show "team not in arena"
 							arena.teams.remove(args[5]);
 							sender.sendMessage("success"); return true; // todo: improve message
@@ -158,7 +174,10 @@ public class Executor implements CommandExecutor {
 					}
 					
 					CTFSpawn spawn = p.spawns.get(args[2]);
-					if (spawn == null) return true; // todo: show "not found"
+					if (spawn == null) {
+						sender.sendMessage(NOT_FOUND);
+						return true;
+					}
 					
 					if (args[3].equalsIgnoreCase("team")) {
 						if (args.length < 5) {
@@ -168,7 +187,10 @@ public class Executor implements CommandExecutor {
 						
 						if (args[4].equalsIgnoreCase("set")) {
 							CTFTeam team = p.teams.get(args[5]);
-							if (team == null) return true; // todo: show "not found"
+							if (team == null) {
+								sender.sendMessage(NOT_FOUND);
+								return true;
+							}
 							spawn.team = team;
 							sender.sendMessage("success"); return true; // todo: improve message
 						}
@@ -221,7 +243,10 @@ public class Executor implements CommandExecutor {
 					}
 					
 					CTFTeam team = p.teams.get(args[2]);
-					if (team == null) return true; // todo: show "not found"
+					if (team == null) {
+						sender.sendMessage(NOT_FOUND);
+						return true;
+					}
 					
 					if (args[3].equalsIgnoreCase("color") || args[3].equalsIgnoreCase("colour")) {
 						if (args.length < 5) {
